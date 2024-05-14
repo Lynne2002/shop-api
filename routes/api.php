@@ -21,10 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/product', [ProductController::class, 'createProduct']);
-Route::middleware('auth:sanctum')->get('/products', [ProductController::class, 'getAllProducts']);
-Route::get('/product', [ProductController::class, 'getProduct']);
-Route::put('/product', [ProductController::class, 'updateProduct']);
-Route::delete('/product', [ProductController::class, 'deleteProduct']);
+//Route::middleware('auth:sanctum')->get('/products', [ProductController::class, 'getAllProducts']);
+Route::get('/products', [ProductController::class, 'getAllProducts']);
+Route::get('/product/{id}', [ProductController::class, 'getProduct']);
+Route::put('product/{id}/edit', [ProductController::class, 'updateProduct']);
+Route::delete('/product/{id}/delete', [ProductController::class, 'deleteProduct']);
 
 /**
  * AUTHENTICATION
