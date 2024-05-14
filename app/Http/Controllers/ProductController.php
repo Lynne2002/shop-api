@@ -33,7 +33,7 @@ class ProductController extends Controller
         if($product){
             return response(
                 [
-                    'message'=>'success',
+                    'message'=>'Product added successfully!',
                     'product'=>$product,
                     'status'=>200
                 ]
@@ -71,9 +71,9 @@ class ProductController extends Controller
     /**
      * GET ONE PRODUCT
      */
-    function getProduct(Request $request){
-        $request->validate(['id'=>'required']);
-        $product = ProductModel::find($request->id);
+    function getProduct(Request $request, $id){
+       
+        $product = ProductModel::find($id);
         if($product){
             return response([
                 'message'=>'success',
@@ -83,17 +83,17 @@ class ProductController extends Controller
         }
         else{
             return response([
-                'message'=>'error',
+                'message'=>'Product ID does not exist!',
                 'products'=>'Product does not exist!',
                 'status'=>404
-            ]);
+            ], 404);
         }
     }
 
     /**
      * UPDATING A PRODUCT
      */
-    function updateProduct(Request $request){
+    function updateProduct(Request $request, $id){
         $request -> validate([
             'id'=>'required',
             'name'=> 'required',
@@ -104,7 +104,7 @@ class ProductController extends Controller
             'numberAvailable'=> 'required',
             'price'=> 'required'
         ]);
-        $product = ProductModel::find($request->id);
+        $product = ProductModel::find($id);
         if($product){
             $product->name=$request->name;
             $product->description=$request->description;
@@ -117,14 +117,14 @@ class ProductController extends Controller
             $product->save();
 
             return response([
-                'message'=>'success',
+                'message'=>'Product updated successfully!',
                 'products'=>$product,
                 'status'=>200
             ]);
         }
         else{
             return response([
-                'message'=>'error',
+                'message'=>'Product does not exist!',
                 'products'=>'Product doesn\'t exist!',
                 'status'=>404
             ]);
@@ -134,21 +134,21 @@ class ProductController extends Controller
     /**
      * DELETING A PRODUCT
      */
-    function deleteProduct(Request $request){
-        $request->validate(['id'=>'required']);
-        $product=ProductModel::find($request->id);
+    function deleteProduct(Request $request, $id){
+       
+        $product=ProductModel::find($id);
 
         if($product){
             $product->delete();
             return response([
-                'message'=>'success',
+                'message'=>'Product has been deleted successfully!',
                 'products'=>'Product has been deleted successfully!',
                 'status'=>200
             ]);
         }
         else{
             return response([
-                'message'=>'error',
+                'message'=>'Product does not exist!',
                 'products'=>'Product does not exist!',
                 'status'=>404
             ]);
